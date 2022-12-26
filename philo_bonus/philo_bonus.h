@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_bonus.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 05:31:20 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/25 18:07:44 by richard          ###   ########.fr       */
+/*   Updated: 2022/12/26 12:59:30 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -21,15 +21,15 @@
 # include <semaphore.h>
 # include <sys/stat.h>
 # include <signal.h>
-# define MUTEXES 6
+# define MUTEXES 5
 
-# define START_SEM  "start_sem"
-# define SLEEP_SEM  "sleep_sem"
-# define EAT_SEM    "eat_sem"
-# define STARV_SEM  "starv_sem"
-# define OUT_SEM    "out_sem"
-# define DEATH_SEM  "death_sem"
-# define FORKS      "forks"
+# define START_SEM	"/start_sem"
+# define SLEEP_SEM	"/sleep_sem"
+# define EAT_SEM	"/eat_sem"
+# define STARV_SEM	"/starv_sem"
+# define OUT_SEM	"/out_sem"
+# define DEATH_SEM	"/death_sem"
+# define FORKS		"/forks"
 
 typedef enum s_bool
 {
@@ -50,15 +50,8 @@ typedef struct s_info
 	sem_t			*start_sem;
 	sem_t			*sleep_sem;
 	sem_t			*eat_sem;
-	sem_t			*starv_sem;
 	sem_t			*out_sem;
 }	t_i;
-
-typedef struct s_data
-{
-	t_i				i;
-	t_philo			ph;
-}	t_data;
 
 typedef struct s_philo
 {
@@ -71,27 +64,33 @@ typedef struct s_philo
 	int				meal_nbr;
 }	t_philo;
 
+typedef struct s_data
+{
+	int			*pids;
+	t_i			i;
+	t_philo		ph;
+}	t_data;
+
 int			main(int arc, char *arg[]);
 
 /* src/check.c */
 void		check_params(int arc);
-t_b			open_sem_main(sem_t **sem, char *str, int value);
+t_b			open_sem(sem_t **sem, char *str, int value);
 t_b			open_sem_child(sem_t **sem, char *str, int value);
 
 /* src/io.c */
 void		error(void);
 void		usage(void);
 void		err_msg(char *title, char *message);
-void		outlog(t_philo *ph, char *mes);
+void		outlog(t_data *d, char *mes);
 
 /* src/init.c */
 void		init(t_data *d);
 void		init_philos(t_data *d);
 t_b			alloc_philos_and_forks(t_data *d);
-void		init_table(t_data *d);
-t_b			init_main_semaphores(t_data *d);
+t_b			init_table(t_data *d);
+t_b			open_semaphores(t_data *d);
 t_b			init_child_semaphores(t_data *d);
-
 
 /* src/parse.c */
 void		parse(t_data *d, char *arg[]);
@@ -103,20 +102,20 @@ char		*get_parsing_params(int index);
 /* src/routine */
 void		*thread_routine(void *arg);
 t_b			create_processes(t_data *d);
-t_b			take_forks(t_data *d, int i);
-void		routine(t_data *d, int i);
+t_b			take_forks(t_data *d);
+t_b			routine(t_data *d);
 
 /* src/free.c */
 void		free_table(t_data *d);
 
 /* src/events.c */
-void		eating_event(t_data *d, int i);
-void		satiation_event(t_data *d, int i);
-void		sleeping_event(t_data *d, int i);
-void		thinking_event(t_data *d, int i);
+void		eating_event(t_data *d);
+void		satiation_event(t_data *d);
+void		sleeping_event(t_data *d);
+void		thinking_event(t_data *d);
 
 /* src/destroy.c */
-t_b			drop_forks(t_data *d, int i);
+t_b			drop_forks(t_data *d);
 t_b			destroy_sems(t_data *d, int nbr_to_del);
 t_b			kill_processes(t_data *d, int thread_nbr);
 t_b			unlink_semaphores(void);
@@ -129,6 +128,6 @@ int			msleep(unsigned int tms);
 
 /* src/monitor */
 void		monitor(t_data *d);
-t_b			can_continue(t_philo *ph);
+t_b			can_continue(t_data *d);
 
 #endif

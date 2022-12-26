@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 10:48:28 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/26 07:42:22 by rkanmado         ###   ########.fr       */
+/*   Updated: 2022/12/26 12:59:17 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ time_t	elapsed_from_new_turn(t_b is_new_turn)
 
 int	msleep(unsigned int tms)
 {
-	return usleep(tms * 1000);
+	return (usleep(tms * 1000));
 }

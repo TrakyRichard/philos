@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 05:29:22 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/26 08:34:33 by rkanmado         ###   ########.fr       */
+/*   Updated: 2022/12/26 11:42:29 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	check_params(int arc)
 	return ;
 }
 
-t_b	open_sem_main(sem_t **sem, char *str, int value)
+t_b	open_sem(sem_t **sem, char *str, int value)
 {
-	*sem = sem_open(str, O_CREAT, 0644, value);
+	*sem = sem_open(str, O_CREAT, S_IRWXU, value);
 	if (*sem == SEM_FAILED)
 		return (false);
 	return (true);

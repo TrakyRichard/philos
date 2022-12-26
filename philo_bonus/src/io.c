@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 05:29:08 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/26 05:09:09 by rkanmado         ###   ########.fr       */
+/*   Updated: 2022/12/26 10:15:16 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void	err_msg(char *title, char *message)
 	return ;
 }
 
-void	outlog(t_philo *ph, char *mes)
+void	outlog(t_data *d, char *mes)
 {
 	time_t	ms;
 
-	sem_wait(ph->i->out_sem);
+	sem_wait(d->i.out_sem);
 	ms = elapsed_ms();
-	printf("%lu: philo %d %s\n", ms, ph->id + 1, mes);
-	sem_post(ph->i->out_sem);
+	printf("%lu: philo %d %s\n", ms, d->ph.id + 1, mes);
+	sem_post(d->i.out_sem);
 	return ;
 }

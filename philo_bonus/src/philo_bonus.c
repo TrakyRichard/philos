@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 05:30:22 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/26 09:14:53 by rkanmado         ###   ########.fr       */
+/*   Updated: 2022/12/26 11:15:06 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	main(int arc, char *arg[])
 
 	check_params(arc);
 	parse(&d, arg);
-	init_table(&d);
-	close_semaphores(&d);
+	if (!init_table(&d))
+		err_msg("Init failed", "data initialisation failed");
 	if (create_processes(&d) == false)
-		error();
+		err_msg("process failed", "process creation failed");
 	monitor(&d);
 	free_table(&d);
 	return (0);

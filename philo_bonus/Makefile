@@ -13,6 +13,7 @@ SRCS =  $(INDIR)philo_bonus.c 	\
 		$(INDIR)io.c 		\
 		$(INDIR)init.c		\
 		$(INDIR)routine.c	\
+		$(INDIR)semaphore.c	\
 		$(INDIR)monitor.c	\
 		$(INDIR)events.c	\
 		$(INDIR)destroy.c	\

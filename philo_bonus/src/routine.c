@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 07:31:05 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/26 09:15:15 by rkanmado         ###   ########.fr       */
+/*   Updated: 2022/12/26 12:49:24 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,26 @@ t_b	create_processes(t_data *d)
 	sem_wait(d->i.start_sem);
 	while (i < d->i.philo_nbr)
 	{
-		d->philos[i].id = i;
-		d->philos[i].pid = fork();
-		if (d->philos[i].pid == 0)
-			routine(d, i);
+		d->ph.id = i;
+		d->ph.pid = fork();
+		d->pids[i] = d->ph.pid;
+		if (d->ph.pid == 0)
+			routine(d);
 		i++;
 	}
 	sem_post(d->i.start_sem);
 	return (true);
 }
 
-t_b	take_forks(t_data *d, int i)
+t_b	routine(t_data *d)
 {
-	sem_wait(d->forks);
-	d->philos[i].is_lf_taken = true;
-	outlog(&d->philos[i], "has taken left fork");
-	sem_wait(d->forks);
-	d->philos[i].is_rf_taken = true;
-	outlog(&d->philos[i], "has taken right fork");
-	return (true);
-}
-
-
-void	routine(t_data *d, int i)
-{
-	// init_child_semaphores(d);
-	while (can_continue(&d->philos[i]))
+	while (42)
 	{
-		thinking_event(d, i);
-		take_forks(d, i);
-		eating_event(d, i);
-		drop_forks(d, i);
-		sleeping_event(d, i);
+		thinking_event(d);
+		take_forks(d);
+		eating_event(d);
+		drop_forks(d);
+		sleeping_event(d);
 	}
-	return ;
+	return (true);
 }
