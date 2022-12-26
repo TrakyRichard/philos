@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 05:29:08 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/26 11:57:35 by rkanmado         ###   ########.fr       */
+/*   Updated: 2022/12/26 13:26:10 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_b	kill_processes(t_data *d, int thread_nbr)
 	int	i;
 
 	i = 0;
+	free_table(d);
 	while (i < thread_nbr)
 	{
 		if (kill(d->pids[i++], 9) != 0)

@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 05:30:22 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/26 11:15:06 by rkanmado         ###   ########.fr       */
+/*   Updated: 2022/12/26 13:50:38 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int arc, char *arg[])
 {
-	t_data	d;
+	t_data		d;
 
 	check_params(arc);
 	parse(&d, arg);
@@ -22,7 +22,8 @@ int	main(int arc, char *arg[])
 		err_msg("Init failed", "data initialisation failed");
 	if (create_processes(&d) == false)
 		err_msg("process failed", "process creation failed");
-	monitor(&d);
+	if (pthread_create(&d.th, NULL, &monitor, (void *) &d) != 0)
+		err_msg("Thread failed", "error while creating the thread");
 	free_table(&d);
 	return (0);
 }

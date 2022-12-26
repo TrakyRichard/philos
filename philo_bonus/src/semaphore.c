@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 10:00:43 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/26 11:57:49 by rkanmado         ###   ########.fr       */
+/*   Updated: 2022/12/26 13:14:31 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_b	unlink_semaphores(void)
 	sem_unlink(START_SEM);
 	sem_unlink(SLEEP_SEM);
 	sem_unlink(OUT_SEM);
+	sem_unlink(FORKS);
 	return (true);
 }
 
@@ -27,6 +28,7 @@ t_b	destroy_sems(t_data *d, int nbr_to_del)
 	int	i;
 
 	i = 0;
+	sem_close(d->i.forks);
 	while (i < nbr_to_del)
 	{
 		if (i == 0)

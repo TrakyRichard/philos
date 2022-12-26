@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 22:28:18 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/26 12:29:13 by rkanmado         ###   ########.fr       */
+/*   Updated: 2022/12/26 14:00:44 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,18 @@ void	eating_event(t_data *d)
 	t_philo	*ph;
 
 	ph = &d->ph;
+	ms = elapsed_ms();
 	sem_wait(d->i.eat_sem);
 	if (ph->is_rf_taken && ph->is_lf_taken)
 	{
 		outlog(d, "is eating");
 		ph->meal_nbr++;
 		if (ph->meal_nbr == d->i.meal_required)
+		{
 			d->i.satiated_philos++;
+			printf("d->ph.time_of_starvation %lu < ms %lu \n\n", d->ph.time_of_starvation, ms);
+			printf("satiated_philos %d \n\n", d->i.satiated_philos);
+		}
 		ms = elapsed_ms();
 		ph->time_of_starvation = ms + d->i.to_die;
 		ph->last_meal_time = ms;

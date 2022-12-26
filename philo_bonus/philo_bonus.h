@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 05:31:20 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/26 12:59:30 by rkanmado         ###   ########.fr       */
+/*   Updated: 2022/12/26 13:50:57 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define STARV_SEM	"/starv_sem"
 # define OUT_SEM	"/out_sem"
 # define DEATH_SEM	"/death_sem"
-# define FORKS		"/forks"
+# define FORKS		"/forks_richarddxc"
 
 typedef enum s_bool
 {
@@ -67,6 +67,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int			*pids;
+	pthread_t	th;
 	t_i			i;
 	t_philo		ph;
 }	t_data;
@@ -127,7 +128,7 @@ time_t		elapsed_ms(void);
 int			msleep(unsigned int tms);
 
 /* src/monitor */
-void		monitor(t_data *d);
+void		*monitor(void *arg);
 t_b			can_continue(t_data *d);
 
 #endif

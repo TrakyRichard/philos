@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 05:29:38 by rkanmado          #+#    #+#             */
-/*   Updated: 2022/12/26 12:55:53 by rkanmado         ###   ########.fr       */
+/*   Updated: 2022/12/26 13:14:59 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_philos(t_data *d)
 
 t_b	open_semaphores(t_data *d)
 {
-	d->i.forks = sem_open(FORKS, O_CREAT, S_IRWXU, 10);
+	d->i.forks = sem_open(FORKS, O_CREAT, S_IRWXU, d->i.philo_nbr);
 	if (d->i.forks == SEM_FAILED)
 		return (false);
 	d->i.death_sem = sem_open(DEATH_SEM, O_CREAT, S_IRWXU, 1);
